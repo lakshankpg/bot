@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>𝕃𝕒𝕜𝕚 𝕄𝔻</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-cyan: #00f2ff;
-      --primary-red: #ff0000;
-      --neon-blue: #00bfff;
-      --neon-purple: #b026ff;
-      --neon-green: #00ff88;
-      --dark-bg: #0a0a0a;
-      --card-bg: rgba(10, 10, 10, 0.9);
+      --neon-blue: #00f2ff;
+      --neon-red: #ff003c;
+      --neon-green: #00ff9d;
+      --dark-bg: #0a0a0f;
     }
 
     * {
@@ -23,64 +21,108 @@
     }
 
     body {
+      font-family: 'Exo 2', sans-serif;
+      background: var(--dark-bg);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: var(--dark-bg);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
       position: relative;
     }
 
-    .video-background {
+    /* Animated Background */
+    .bg-animation {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
       z-index: 1;
-      opacity: 0.4;
-      filter: brightness(0.7) contrast(1.2);
+      background: radial-gradient(circle at 20% 50%, rgba(0, 242, 255, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 0, 60, 0.05) 0%, transparent 50%),
+                  linear-gradient(45deg, #0a0a0f 0%, #1a1a2e 100%);
+      overflow: hidden;
     }
 
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, 
-        rgba(0, 0, 0, 0.95) 30%, 
-        rgba(0, 15, 30, 0.85) 70%,
-        rgba(255, 0, 0, 0.1) 100%);
-      z-index: 2;
+    .cyber-grid {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        linear-gradient(rgba(0, 242, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
     }
 
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50px, -50px); }
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .floating-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--neon-blue);
+      top: 10%;
+      left: 5%;
+      animation: float1 15s ease-in-out infinite;
+    }
+
+    .floating-2 {
+      width: 200px;
+      height: 200px;
+      background: var(--neon-red);
+      bottom: 20%;
+      right: 10%;
+      animation: float2 20s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, -50px) rotate(180deg); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-50px, 30px) rotate(-180deg); }
+    }
+
+    /* Main Container */
     .container {
+      position: relative;
+      z-index: 10;
       width: 100%;
       max-width: 450px;
       padding: 20px;
-      z-index: 10;
-      position: relative;
     }
 
-    .main-card {
-      background: var(--card-bg);
-      border-radius: 20px;
+    /* Cyber Box */
+    .cyber-box {
+      background: rgba(10, 15, 25, 0.85);
+      border-radius: 15px;
       padding: 30px;
-      box-shadow: 
-        0 0 40px rgba(0, 242, 255, 0.4),
-        0 0 80px rgba(255, 0, 0, 0.3),
-        inset 0 0 30px rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(0, 242, 255, 0.3);
+      box-shadow: 
+        0 0 50px rgba(0, 242, 255, 0.3),
+        inset 0 0 30px rgba(0, 242, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
 
-    .main-card::before {
+    .cyber-box::before {
       content: '';
       position: absolute;
       top: -2px;
@@ -88,56 +130,57 @@
       right: -2px;
       bottom: -2px;
       background: linear-gradient(45deg, 
-        var(--primary-cyan), 
-        var(--neon-purple),
-        var(--primary-red),
+        var(--neon-blue), 
+        var(--neon-red),
         var(--neon-green),
-        var(--primary-cyan));
+        var(--neon-blue));
+      border-radius: 17px;
       z-index: -1;
-      border-radius: 22px;
-      opacity: 0.4;
       animation: borderGlow 4s linear infinite;
-      background-size: 400% 400%;
+      background-size: 400%;
     }
 
     @keyframes borderGlow {
-      0%, 100% { 
-        background-position: 0% 50%;
-        opacity: 0.3;
-      }
-      50% { 
-        background-position: 100% 50%;
-        opacity: 0.6;
-      }
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
     }
 
-    .logo-container {
+    /* Header Section */
+    .header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       position: relative;
     }
 
-    .logo-icon {
-      font-size: 60px;
-      color: transparent;
-      background: linear-gradient(45deg, var(--primary-red), var(--neon-purple));
-      -webkit-background-clip: text;
-      background-clip: text;
-      margin-bottom: 15px;
-      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-      animation: pulse 2s infinite, rotate 10s linear infinite;
-      display: inline-block;
+    .logo-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
     }
 
-    @keyframes pulse {
-      0%, 100% { 
-        transform: scale(1) rotate(0deg);
-        filter: brightness(1);
-      }
-      50% { 
-        transform: scale(1.08) rotate(180deg);
-        filter: brightness(1.3);
-      }
+    .logo-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid var(--neon-blue);
+      border-radius: 50%;
+      animation: rotate 10s linear infinite;
+    }
+
+    .logo-ring:nth-child(2) {
+      border-color: var(--neon-red);
+      animation-direction: reverse;
+      animation-duration: 8s;
+    }
+
+    .logo-ring:nth-child(3) {
+      border-color: var(--neon-green);
+      animation-duration: 12s;
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
     }
 
     @keyframes rotate {
@@ -145,502 +188,332 @@
       100% { transform: rotate(360deg); }
     }
 
-    .title {
-      color: var(--primary-cyan);
-      font-size: 32px;
-      font-weight: 900;
-      margin-bottom: 5px;
-      text-shadow: 
-        0 0 10px rgba(0, 242, 255, 0.8),
-        0 0 20px rgba(0, 242, 255, 0.6),
-        0 0 30px rgba(0, 242, 255, 0.4);
-      letter-spacing: 1.5px;
-      animation: flicker 3s infinite alternate, float 6s ease-in-out infinite;
-      position: relative;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    .subtitle {
-      color: #ffffff;
-      font-size: 16px;
-      opacity: 0.9;
-      margin-bottom: 25px;
-      font-weight: 500;
-    }
-
-    .credits {
-      color: var(--neon-blue);
-      font-size: 14px;
-      margin-bottom: 30px;
-      text-align: center;
-      font-style: italic;
-      text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
-    }
-
-    .instructions {
-      background: rgba(0, 20, 40, 0.5);
-      border-left: 4px solid var(--primary-cyan);
-      padding: 20px;
-      border-radius: 0 12px 12px 0;
-      margin-bottom: 25px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .instructions::before {
-      content: '';
+    .logo {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(0, 242, 255, 0.1), 
-        transparent);
-      animation: shimmer 3s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .instructions h4 {
-      color: var(--primary-cyan);
-      margin-bottom: 12px;
-      font-size: 18px;
+      width: 70px;
+      height: 70px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-green));
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      font-size: 28px;
+      color: white;
+      box-shadow: 0 0 20px var(--neon-blue);
     }
 
-    .instructions p {
-      color: #ffffff;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 10px;
-      padding-left: 5px;
-      position: relative;
-    }
-
-    .instructions p::before {
-      content: '▶';
-      color: var(--neon-green);
-      position: absolute;
-      left: -15px;
-      font-size: 12px;
-    }
-
-    /* Enhanced Input Group */
-    .input-group {
-      margin-bottom: 30px;
-      position: relative;
-    }
-
-    .input-label {
-      display: block;
-      color: var(--primary-cyan);
-      margin-bottom: 12px;
-      font-size: 16px;
-      font-weight: 600;
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      background: linear-gradient(to right, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
     }
 
-    .input-wrapper {
-      display: flex;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 
-        0 0 20px rgba(0, 242, 255, 0.4),
-        inset 0 0 15px rgba(0, 0, 0, 0.5);
+    .subtitle {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 15px;
       position: relative;
-      border: 2px solid transparent;
-      background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.95), 
-        rgba(230, 255, 255, 0.98));
-      transition: all 0.3s;
+      display: inline-block;
     }
 
-    .input-wrapper:focus-within {
-      border-color: var(--neon-purple);
-      box-shadow: 
-        0 0 30px rgba(176, 38, 255, 0.6),
-        0 0 60px rgba(0, 242, 255, 0.4);
-      transform: translateY(-2px);
+    .subtitle::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--neon-blue), transparent);
     }
 
-    .number-input {
-      flex: 1;
-      padding: 18px 20px;
-      background: transparent;
-      border: none;
-      font-size: 18px;
-      color: #000;
-      outline: none;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    .number-input::placeholder {
-      color: #666;
-      font-weight: normal;
-    }
-
-    /* SUBMIT BUTTON - ENHANCED */
-    .submit-btn {
-      background: linear-gradient(135deg, 
-        #ff0000, 
-        #ff3366, 
-        #ff0000);
-      background-size: 200% 200%;
-      color: white;
-      border: none;
-      padding: 0 30px;
-      font-weight: 800;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s;
+    /* Channel Button */
+    .channel-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      background: linear-gradient(45deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 300px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
       position: relative;
       overflow: hidden;
-      min-width: 140px;
     }
 
-    .submit-btn::before {
+    .channel-btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.2), 
-        transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
       transition: 0.5s;
     }
 
-    .submit-btn:hover::before {
+    .channel-btn:hover::before {
       left: 100%;
     }
 
-    .submit-btn:hover {
-      background-position: right center;
+    .channel-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 
-        0 0 30px rgba(255, 0, 0, 0.7),
-        0 0 60px rgba(255, 0, 0, 0.4),
-        0 5px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
+    }
+
+    /* Instructions */
+    .instructions {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid var(--neon-blue);
+    }
+
+    .instructions h4 {
+      color: var(--neon-green);
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+      color: #ccc;
+      line-height: 1.8;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .instructions li::marker {
+      color: var(--neon-blue);
+      font-weight: bold;
+    }
+
+    /* Input Section */
+    .input-section {
+      margin: 25px 0;
+    }
+
+    .input-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--neon-blue);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .country-code {
+      flex: 0 0 80px;
+      background: rgba(0, 242, 255, 0.1);
+      border: 1px solid var(--neon-blue);
+      border-radius: 8px;
+      padding: 15px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .number-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 242, 255, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      color: white;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+    }
+
+    .number-input:focus {
+      outline: none;
+      border-color: var(--neon-green);
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+    }
+
+    .submit-btn {
+      background: linear-gradient(45deg, var(--neon-red), #ff003c);
+      color: white;
+      border: none;
+      padding: 18px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
     }
 
     .submit-btn:active {
-      transform: translateY(1px);
-      box-shadow: 
-        0 0 20px rgba(255, 0, 0, 0.5),
-        0 0 40px rgba(255, 0, 0, 0.3);
+      transform: translateY(-1px);
     }
 
-    .submit-btn i {
-      font-size: 20px;
-      transition: transform 0.3s;
-    }
-
-    .submit-btn:hover i {
-      transform: translateX(5px) rotate(45deg);
-    }
-
-    /* Action Buttons Enhanced */
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .action-btn {
-      padding: 18px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      font-size: 16px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .action-btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 12px;
-      padding: 2px;
-      background: linear-gradient(135deg, 
-        var(--primary-cyan), 
-        var(--neon-purple),
-        var(--primary-red));
-      -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-      mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .action-btn:hover::after {
-      opacity: 1;
-      animation: borderGlow 3s linear infinite;
-    }
-
-    .channel-btn {
-      background: linear-gradient(135deg, #25D366, #128C7E, #075E54);
-      color: white;
-      box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
-    }
-
+    /* Owner Button */
     .owner-btn {
-      background: linear-gradient(135deg, var(--primary-cyan), #0099cc, #006699);
-      color: white;
-      box-shadow: 0 5px 20px rgba(0, 242, 255, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 242, 255, 0.1);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: all 0.3s;
     }
 
-    .action-btn:hover {
-      transform: translateY(-5px);
-      box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        0 0 25px currentColor;
+    .owner-btn:hover {
+      background: var(--neon-blue);
+      color: black;
+      box-shadow: 0 0 20px var(--neon-blue);
     }
 
-    .action-btn:active {
-      transform: translateY(-2px);
-    }
-
-    .action-btn i {
-      font-size: 20px;
-      transition: transform 0.3s;
-    }
-
-    .action-btn:hover i {
-      transform: scale(1.2) rotate(10deg);
-    }
-
-    .status-message {
-      text-align: center;
-      padding: 20px;
-      border-radius: 12px;
+    /* Pair Code Display */
+    .pair-code {
       margin-top: 25px;
-      display: none;
-      background: rgba(0, 40, 80, 0.6);
-      color: white;
-      font-weight: 600;
-      font-size: 16px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(0, 242, 255, 0.2);
-      position: relative;
-      overflow: hidden;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      border: 1px solid var(--neon-green);
+      text-align: center;
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .code-display {
-      background: linear-gradient(135deg, 
-        rgba(0, 0, 0, 0.8), 
-        rgba(20, 0, 40, 0.9));
-      border: 2px solid transparent;
-      border-radius: 15px;
-      padding: 25px;
-      margin-top: 25px;
-      display: none;
-      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 2rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      letter-spacing: 3px;
+      border: 1px solid var(--neon-green);
       cursor: pointer;
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    .code-display::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, 
-        var(--primary-cyan), 
-        var(--neon-purple),
-        var(--primary-red));
-      z-index: -1;
-      border-radius: 17px;
-      opacity: 0.5;
-      animation: borderGlow 3s linear infinite;
     }
 
     .code-display:hover {
-      transform: translateY(-3px);
-      box-shadow: 
-        0 0 40px rgba(0, 242, 255, 0.5),
-        0 0 80px rgba(176, 38, 255, 0.3);
+      background: rgba(0, 255, 157, 0.1);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
     }
 
-    .code-label {
-      color: var(--neon-green);
-      font-weight: 800;
-      margin-bottom: 15px;
-      display: block;
-      font-size: 18px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .code-value {
-      color: white;
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: 5px;
-      font-family: 'Courier New', monospace;
-      text-shadow: 
-        0 0 10px rgba(255, 255, 255, 0.8),
-        0 0 20px rgba(0, 242, 255, 0.6);
-      background: linear-gradient(45deg, #fff, var(--primary-cyan));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      padding: 10px;
-      border-radius: 10px;
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .sound-control {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--primary-cyan), var(--neon-blue));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .copy-btn {
+      background: var(--neon-green);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
-      z-index: 100;
-      box-shadow: 
-        0 0 25px rgba(0, 242, 255, 0.8),
-        0 0 50px rgba(0, 191, 255, 0.5);
       transition: all 0.3s;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      animation: pulse 2s infinite;
     }
 
-    .sound-control:hover {
-      transform: scale(1.15) rotate(90deg);
-      box-shadow: 
-        0 0 35px rgba(0, 242, 255, 1),
-        0 0 70px rgba(0, 191, 255, 0.7);
+    .copy-btn:hover {
+      background: white;
+      transform: scale(1.05);
     }
 
-    .sound-control i {
-      color: white;
-      font-size: 24px;
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888;
+      font-size: 0.9rem;
     }
 
-    .cyber-line {
-      height: 3px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        var(--primary-cyan), 
-        var(--neon-purple),
-        var(--primary-red),
-        var(--primary-cyan),
-        transparent);
-      margin: 30px 0;
-      width: 100%;
-      position: relative;
+    .bot-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
     }
 
-    .cyber-line::after {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
+    .stat-item {
+      text-align: center;
     }
 
-    .neon-dots {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 3;
+    .stat-value {
+      color: var(--neon-blue);
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
-    .dot {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--primary-cyan);
+    .stat-label {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid transparent;
+      border-top-color: var(--neon-blue);
       border-radius: 50%;
-      box-shadow: 
-        0 0 10px var(--primary-cyan),
-        0 0 20px var(--primary-cyan);
-      animation: float 20s linear infinite;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) translateX(0) scale(0.5);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100px) translateX(calc(100vw * var(--random-x))) scale(1);
-        opacity: 0;
-      }
-    }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        text-shadow: 
-          0 0 5px var(--primary-cyan),
-          0 0 10px var(--primary-cyan),
-          0 0 20px var(--primary-cyan),
-          0 0 40px var(--primary-cyan);
-      }
-      20%, 24%, 55% {
-        text-shadow: none;
-        opacity: 0.7;
-      }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Responsive */
@@ -649,443 +522,280 @@
         padding: 15px;
       }
       
-      .main-card {
+      .cyber-box {
         padding: 20px;
       }
       
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
-      
       .title {
-        font-size: 26px;
+        font-size: 1.8rem;
       }
       
-      .submit-btn {
-        min-width: 120px;
-        padding: 0 20px;
-        font-size: 16px;
+      .input-group {
+        flex-direction: column;
       }
       
-      .code-value {
-        font-size: 24px;
-        letter-spacing: 3px;
+      .country-code {
+        flex: none;
+        width: 100%;
       }
-    }
-
-    /* Loading animation for submit */
-    @keyframes loading {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .loading {
-      position: relative;
-      color: transparent !important;
-    }
-
-    .loading::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top: 3px solid white;
-      border-radius: 50%;
-      animation: loading 1s linear infinite;
     }
   </style>
 </head>
 <body>
-  <!-- Video Background -->
-  <video class="video-background" id="bgVideo" autoplay muted loop>
-    <source src="https://files.catbox.moe/lr2vmg.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
-  
-  <!-- Overlay -->
-  <div class="overlay"></div>
-  
-  <!-- Neon dots -->
-  <div class="neon-dots" id="dotsContainer"></div>
-  
-  <!-- Sound control -->
-  <div class="sound-control" id="soundControl">
-    <i class="fas fa-volume-mute" id="soundIcon"></i>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="cyber-grid"></div>
+    <div class="floating-element floating-1"></div>
+    <div class="floating-element floating-2"></div>
   </div>
-  
-  <!-- Main Container -->
+
   <div class="container">
-    <div class="main-card">
-      <!-- Logo -->
-      <div class="logo-container">
-        <div class="logo-icon">
-          <i class="fas fa-robot"></i>
+    <div class="cyber-box">
+      <!-- Header -->
+      <div class="header">
+        <div class="logo-container">
+          <div class="logo-ring"></div>
+          <div class="logo-ring"></div>
+          <div class="logo-ring"></div>
+          <div class="logo">
+            <i class="fas fa-robot"></i>
+          </div>
         </div>
         <h1 class="title">𝕃𝕒𝕜𝕚 𝕄𝔻</h1>
-        <p class="subtitle">𝕃𝕒𝕜𝕚 𝕄𝔻 WhatsApp Bot</p>
-        <p class="credits">CREATED BY lakshan</p>
+        <p class="subtitle">WhatsApp Bot Authentication</p>
       </div>
-      
-      <div class="cyber-line"></div>
-      
+
+      <!-- Channel Button -->
+      <a href="https://whatsapp.com/channel/0029VbC8OWEBadmatxpZel15" target="_blank" class="channel-btn">
+        <i class="fab fa-whatsapp"></i>
+        Join Our Official Channel
+      </a>
+
       <!-- Instructions -->
       <div class="instructions">
-        <h4><i class="fas fa-code"></i> Setup Instructions</h4>
-        <p>1️⃣ Enter your WhatsApp number with country code</p>
-        <p>2️⃣ Click submit to get pairing code</p>
-        <p>3️⃣ Open WhatsApp → Settings → Linked Devices</p>
-        <p>4️⃣ Click "Link a device" and enter the code</p>
-        <p>5️⃣ Bot will connect automatically</p>
-        <p>6️⃣ Use .menu or .alive to test</p>
+        <h4><i class="fas fa-graduation-cap"></i> Setup Instructions</h4>
+        <ol>
+          <li>Enter your WhatsApp number with country code</li>
+          <li>Click submit to get pairing code</li>
+          <li>Go to WhatsApp → Settings → Linked Devices</li>
+          <li>Click "Link a device" and enter the code</li>
+          <li>Wait for connection confirmation</li>
+          <li>Use .menu to access bot commands</li>
+        </ol>
       </div>
-      
+
       <!-- Input Section -->
-      <div class="input-group">
-        <label class="input-label">
-          <i class="fas fa-mobile-alt"></i> WhatsApp Number
-        </label>
-        <div class="input-wrapper">
-          <input type="number" class="number-input" id="numberInput" placeholder="9476xxxxxxx" minlength="9">
-          <button class="submit-btn" id="submitBtn">
-            <i class="fas fa-rocket"></i> SUBMIT
-          </button>
+      <div class="input-section">
+        <div class="input-label">
+          <i class="fas fa-mobile-alt"></i>
+          WhatsApp Number
         </div>
+        <div class="input-group">
+          <div class="country-code">+94</div>
+          <input type="tel" class="number-input" id="number" placeholder="77XXXXXXX" maxlength="9">
+        </div>
+        <button class="submit-btn" id="submit">
+          <i class="fas fa-sign-in-alt"></i> Generate Pairing Code
+        </button>
       </div>
-      
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <a href="https://whatsapp.com/channel/0029VbC8OWEBadmatxpZel15" target="_blank" class="action-btn channel-btn">
-          <i class="fab fa-whatsapp"></i> CHANNEL
+
+      <!-- Owner Button -->
+      <div style="text-align: center;">
+        <a href="https://wa.me/94789227570" target="_blank" class="owner-btn">
+          <i class="fas fa-user-shield"></i> Contact Owner
         </a>
-        <a href="https://wa.me/94789227570" target="_blank" class="action-btn owner-btn">
-          <i class="fas fa-user-shield"></i> OWNER
-        </a>
       </div>
-      
-      <!-- Status Message -->
-      <div class="status-message" id="statusMessage">
-        <i class="fas fa-spinner fa-spin"></i> Processing your request...
+
+      <!-- Pair Code Display -->
+      <div id="pair" class="pair-code" style="display: none;">
+        <h4><i class="fas fa-qrcode"></i> Pairing Code</h4>
+        <div class="code-display" id="codeDisplay">
+          CODE: <span id="codeText">XXXX-XXXX</span>
+        </div>
+        <button class="copy-btn" id="copyBtn">
+          <i class="fas fa-copy"></i> Copy Code
+        </button>
+        <p style="margin-top: 15px; color: #aaa; font-size: 0.9rem;">
+          This code expires in 5 minutes
+        </p>
       </div>
-      
-      <!-- Code Display -->
-      <div class="code-display" id="codeDisplay" onclick="copyCode()">
-        <span class="code-label">Pairing Code</span>
-        <div class="code-value" id="codeValue">XXXXXX</div>
-        <small style="color: #aaa; margin-top: 10px; display: block;">
-          <i class="fas fa-copy"></i> Click to copy code
-        </small>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Generating pairing code...</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>© 2024 Cyber-Freedom Bot | All rights reserved</p>
+        <div class="bot-stats">
+          <div class="stat-item">
+            <div class="stat-value" id="usersOnline">0</div>
+            <div class="stat-label">Online</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalUsers">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="uptime">100%</div>
+            <div class="stat-label">Uptime</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
     // DOM Elements
-    const numberInput = document.getElementById('numberInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const statusMessage = document.getElementById('statusMessage');
-    const codeDisplay = document.getElementById('codeDisplay');
-    const codeValue = document.getElementById('codeValue');
-    const bgVideo = document.getElementById('bgVideo');
-    const soundControl = document.getElementById('soundControl');
-    const soundIcon = document.getElementById('soundIcon');
-    const dotsContainer = document.getElementById('dotsContainer');
+    const numberInput = document.getElementById('number');
+    const submitBtn = document.getElementById('submit');
+    const pairSection = document.getElementById('pair');
+    const codeDisplay = document.getElementById('codeText');
+    const copyBtn = document.getElementById('copyBtn');
+    const loading = document.getElementById('loading');
+    const codeContainer = document.getElementById('codeDisplay');
 
-    // Initialize neon dots with enhanced effects
-    function initNeonDots() {
-      for (let i = 0; i < 150; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        dot.style.left = `${Math.random() * 100}%`;
-        dot.style.setProperty('--random-x', Math.random());
-        dot.style.animationDelay = `${Math.random() * 20}s`;
-        dot.style.animationDuration = `${15 + Math.random() * 25}s`;
-        
-        // Random color variation
-        const colors = ['#00f2ff', '#b026ff', '#ff0000', '#00ff88'];
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        dot.style.background = color;
-        dot.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
-        
-        dotsContainer.appendChild(dot);
-      }
-    }
-
-    // Sound control with enhanced effect
-    soundControl.addEventListener('click', () => {
-      if (bgVideo.muted) {
-        bgVideo.muted = false;
-        soundIcon.classList.remove('fa-volume-mute');
-        soundIcon.classList.add('fa-volume-up');
-        soundControl.style.boxShadow = 
-          '0 0 30px rgba(0, 242, 255, 1), 0 0 60px rgba(0, 191, 255, 0.7)';
-        
-        // Add click effect
-        soundControl.style.transform = 'scale(1.3)';
-        setTimeout(() => {
-          soundControl.style.transform = 'scale(1)';
-        }, 300);
-      } else {
-        bgVideo.muted = true;
-        soundIcon.classList.remove('fa-volume-up');
-        soundIcon.classList.add('fa-volume-mute');
-        soundControl.style.boxShadow = 
-          '0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(0, 191, 255, 0.5)';
-      }
-    });
-
-    // Enhanced copy code function
-    async function copyCode() {
-      const code = codeValue.innerText;
-      if (code === 'XXXXXX' || code === 'COPIED!') return;
-      
-      try {
-        await navigator.clipboard.writeText(code);
-        
-        // Enhanced visual feedback
-        const originalText = codeValue.innerText;
-        const originalBg = codeDisplay.style.background;
-        
-        codeValue.innerText = 'COPIED!';
-        codeValue.style.background = 'linear-gradient(45deg, #00ff88, #00cc66)';
-        codeValue.style.webkitBackgroundClip = 'text';
-        codeDisplay.style.boxShadow = 
-          '0 0 50px rgba(0, 255, 136, 0.7), 0 0 100px rgba(0, 255, 136, 0.4)';
-        
-        // Add confetti effect
-        createConfetti();
-        
-        setTimeout(() => {
-          codeValue.innerText = originalText;
-          codeValue.style.background = 'linear-gradient(45deg, #fff, var(--primary-cyan))';
-          codeDisplay.style.boxShadow = '';
-        }, 2000);
-        
-      } catch (err) {
-        showError('Failed to copy. Please copy manually: ' + code);
-      }
-    }
-
-    // Confetti effect for copy success
-    function createConfetti() {
-      const confettiCount = 30;
-      const container = document.querySelector('.container');
-      
-      for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'absolute';
-        confetti.style.width = '8px';
-        confetti.style.height = '8px';
-        confetti.style.background = ['#00f2ff', '#b026ff', '#ff0000', '#00ff88'][Math.floor(Math.random() * 4)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.left = `${50 + Math.random() * 40}%`;
-        confetti.style.top = '50%';
-        confetti.style.zIndex = '1000';
-        confetti.style.opacity = '1';
-        container.appendChild(confetti);
-        
-        // Animate
-        const animation = confetti.animate([
-          { 
-            transform: 'translateY(0) rotate(0deg)', 
-            opacity: 1 
-          },
-          { 
-            transform: `translateY(-${100 + Math.random() * 100}px) 
-                       translateX(${(Math.random() - 0.5) * 200}px) 
-                       rotate(${360 * Math.random()}deg)`, 
-            opacity: 0 
-          }
-        ], {
-          duration: 1000 + Math.random() * 1000,
-          easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
-        });
-        
-        animation.onfinish = () => confetti.remove();
-      }
-    }
-
-    // Enhanced submit handler with animations
+    // Bot Stats (Example data)
+    document.getElementById('usersOnline').textContent = Math.floor(Math.random() * 1000) + 500;
+    document.getElementById('totalUsers').textContent = Math.floor(Math.random() * 10000) + 5000;
+    
+    // Submit Button Handler
     submitBtn.addEventListener('click', async () => {
       const number = numberInput.value.trim();
       
       // Validation
       if (!number) {
-        showError('Please enter your WhatsApp number');
-        shakeElement(numberInput);
+        showAlert('Please enter your WhatsApp number', 'error');
         return;
       }
       
-      if (number.replace(/[^0-9]/g, "").length < 9) {
-        showError('Invalid number. Please include country code');
-        shakeElement(numberInput);
+      if (!/^\d{9}$/.test(number)) {
+        showAlert('Please enter a valid 9-digit number (e.g., 77XXXXXXX)', 'error');
         return;
       }
       
-      // Format number
-      const cleanNumber = number.replace(/[^0-9]/g, "");
-      numberInput.value = `+${cleanNumber}`;
-      numberInput.style.color = '#000';
-      
-      // Show loading with enhanced effects
-      submitBtn.classList.add('loading');
-      submitBtn.disabled = true;
-      statusMessage.style.display = 'block';
-      codeDisplay.style.display = 'none';
-      
-      // Add loading effect to input wrapper
-      document.querySelector('.input-wrapper').style.boxShadow = 
-        '0 0 30px rgba(0, 242, 255, 0.6), 0 0 60px rgba(0, 191, 255, 0.4)';
+      // Show loading
+      loading.style.display = 'block';
+      pairSection.style.display = 'none';
       
       try {
-        // Simulate API call with enhanced delay for effect
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const demoCode = Math.floor(100000 + Math.random() * 900000);
+        // Simulate API call (Replace with actual endpoint)
+        const fullNumber = '94' + number;
+        const response = await axios.get(`/code?number=${fullNumber}`);
         
-        // Display code with animation
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        statusMessage.style.display = 'none';
-        codeValue.innerText = demoCode;
+        // Hide loading
+        loading.style.display = 'none';
         
-        // Animate code display appearance
-        codeDisplay.style.display = 'block';
-        codeDisplay.style.opacity = '0';
-        codeDisplay.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-          codeDisplay.style.transition = 'all 0.5s ease-out';
-          codeDisplay.style.opacity = '1';
-          codeDisplay.style.transform = 'translateY(0)';
-        }, 100);
-        
-        // Reset input wrapper
-        document.querySelector('.input-wrapper').style.boxShadow = '';
-        
-        // Success effect on submit button
-        submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
-        setTimeout(() => {
-          submitBtn.style.background = '';
-        }, 1000);
-        
+        if (response.data && response.data.code) {
+          // Display the code
+          codeDisplay.textContent = response.data.code;
+          pairSection.style.display = 'block';
+          
+          // Scroll to code
+          pairSection.scrollIntoView({ behavior: 'smooth' });
+          
+          // Show success message
+          showAlert('Pairing code generated successfully!', 'success');
+        } else {
+          throw new Error('No code received');
+        }
       } catch (error) {
-        showError('Service unavailable. Please try again later.');
-        console.error(error);
-        
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        document.querySelector('.input-wrapper').style.boxShadow = '';
+        loading.style.display = 'none';
+        showAlert('Failed to generate code. Please try again.', 'error');
+        console.error('Error:', error);
       }
     });
-
-    // Shake animation for invalid input
-    function shakeElement(element) {
-      element.style.animation = 'none';
-      setTimeout(() => {
-        element.style.animation = 'shake 0.5s';
-      }, 10);
+    
+    // Copy Button Handler
+    copyBtn.addEventListener('click', () => {
+      const code = codeDisplay.textContent;
+      navigator.clipboard.writeText(code)
+        .then(() => {
+          // Visual feedback
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          copyBtn.style.background = '#4CAF50';
+          
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+            copyBtn.style.background = '';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Copy failed:', err);
+          showAlert('Failed to copy code', 'error');
+        });
+    });
+    
+    // Code display click to copy
+    codeContainer.addEventListener('click', () => {
+      const code = codeDisplay.textContent;
+      navigator.clipboard.writeText(code)
+        .then(() => {
+          // Animation feedback
+          codeContainer.style.background = 'rgba(0, 255, 157, 0.2)';
+          setTimeout(() => {
+            codeContainer.style.background = '';
+          }, 500);
+        });
+    });
+    
+    // Alert function
+    function showAlert(message, type) {
+      // Remove existing alerts
+      const existingAlert = document.querySelector('.alert');
+      if (existingAlert) existingAlert.remove();
       
-      // Define shake animation
-      if (!document.querySelector('#shake-animation')) {
-        const style = document.createElement('style');
-        style.id = 'shake-animation';
-        style.textContent = `
-          @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-          }
-        `;
-        document.head.appendChild(style);
-      }
-      
-      setTimeout(() => {
-        element.style.animation = '';
-      }, 500);
-    }
-
-    // Enhanced error display
-    function showError(message) {
-      statusMessage.innerHTML = `
-        <i class="fas fa-exclamation-circle"></i> ${message}
+      // Create alert
+      const alert = document.createElement('div');
+      alert.className = `alert ${type}`;
+      alert.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        background: ${type === 'error' ? 'linear-gradient(45deg, #ff003c, #ff3366)' : 'linear-gradient(45deg, #00ff9d, #00cc7a)'};
       `;
-      statusMessage.style.display = 'block';
-      statusMessage.style.background = 'linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(139, 0, 0, 0.4))';
-      statusMessage.style.color = '#ff6666';
-      statusMessage.style.borderColor = '#ff0000';
       
-      // Add error animation
-      statusMessage.style.animation = 'pulse 0.5s';
+      alert.innerHTML = `
+        <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'}"></i>
+        ${message}
+      `;
       
+      document.body.appendChild(alert);
+      
+      // Remove after 3 seconds
       setTimeout(() => {
-        statusMessage.style.display = 'none';
-        statusMessage.style.background = '';
-        statusMessage.style.color = '';
-        statusMessage.style.borderColor = '';
-        statusMessage.style.animation = '';
-        statusMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing your request...';
+        alert.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => alert.remove(), 300);
       }, 3000);
     }
-
-    // Enhanced input validation
+    
+    // Add CSS for animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Input validation
     numberInput.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/[^0-9]/g, "");
-      if (value.length > 15) {
-        value = value.substring(0, 15);
-      }
-      e.target.value = value;
-      
-      // Add typing effect
-      if (value.length > 0) {
-        numberInput.style.background = 'linear-gradient(90deg, #e6ffff, #ffffff)';
-      } else {
-        numberInput.style.background = '';
-      }
-    });
-
-    // Enter key support with enhanced feedback
-    numberInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        // Add press effect
-        submitBtn.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          submitBtn.style.transform = '';
-          submitBtn.click();
-        }, 150);
-      }
-    });
-
-    // Hover effects for all buttons
-    document.querySelectorAll('button, .action-btn').forEach(btn => {
-      btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'translateY(-3px)';
-      });
-      
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
-    });
-
-    // Initialize
-    window.addEventListener('DOMContentLoaded', () => {
-      initNeonDots();
-      
-      // Add interactive effects to elements
-      document.querySelectorAll('.logo-icon, .title').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          el.style.filter = 'brightness(1.5)';
-        });
-        
-        el.addEventListener('mouseleave', () => {
-          el.style.filter = '';
-        });
-      });
-      
-      // Auto-focus input
-      setTimeout(() => {
-        numberInput.focus();
-      }, 500);
+      e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 9);
     });
   </script>
 </body>
