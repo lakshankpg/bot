@@ -3,98 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>𝐂ʏʙᴇʀ-𝐅ʀᴇᴇᴅᴏᴍ</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <title>𝕃𝕒𝕜𝕚 𝕄𝔻</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
+    :root {
+      --primary-cyan: #00f2ff;
+      --primary-red: #ff0000;
+      --neon-blue: #00bfff;
+      --neon-purple: #b026ff;
+      --neon-green: #00ff88;
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(10, 10, 10, 0.9);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: black;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
+      min-height: 100vh;
+      background: var(--dark-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .box {
-      width: 320px;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.8);
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 25px red ;
-      z-index: 2;
-      backdrop-filter: blur(5px);
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; text-shadow: 0 0 5px red, 0 0 20px red ; }
-    }
-
-    h3, h6 {
-      color: #00f2ff;
-      animation: flicker 2s infinite alternate;
-      margin: 10px 0;
-    }
-
-    .input-container {
-      display: flex;
-      width: 100%;
-      margin-top: 15px;
-    }
-
-    .input-container input,
-    .input-container button {
-      height: 3rem;
-      font-size: 1rem;
-      border: none;
-      outline: none;
-      box-sizing: border-box;
-      transition: none !important;
-      transform: none !important;
-      resize: none !important;
-      appearance: none;
-    }
-
-    .input-container input {
-      width: 70%;
-      border-radius: 0.8rem 0 0 0.8rem;
-      background: #e0f7ff;
-      color: #000;
-      padding-left: 1rem;
-    }
-
-    .input-container button {
-      width: 30%;
-      border-radius: 0 0.8rem 0.8rem 0;
-      background: red;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .input-container button:hover {
-      background: red;
-      color: #000;
-    }
-
-    a.centered-text {
-      color: white;
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    /* Video background */
     .video-background {
       position: fixed;
       top: 0;
@@ -103,69 +41,658 @@
       height: 100%;
       object-fit: cover;
       z-index: 1;
-      opacity: 0.5;
+      opacity: 0.4;
+      filter: brightness(0.7) contrast(1.2);
     }
 
-    /* Sound control button */
-    .sound-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: rgba(0, 191, 255, 0.7);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 10;
-      box-shadow: 0 0 10px #00f2ff;
-      transition: all 0.3s;
-    }
-
-    .sound-btn:hover {
-      background: rgba(0, 255, 255, 0.9);
-      transform: scale(1.1);
-    }
-
-    .sound-btn i {
-      color: white;
-      font-size: 20px;
-    }
-
-    /* Neon dot overlay */
-    .neon-overlay {
+    .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: transparent;
+      background: linear-gradient(45deg, 
+        rgba(0, 0, 0, 0.95) 30%, 
+        rgba(0, 15, 30, 0.85) 70%,
+        rgba(255, 0, 0, 0.1) 100%);
+      z-index: 2;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      padding: 20px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .main-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 
+        0 0 40px rgba(0, 242, 255, 0.4),
+        0 0 80px rgba(255, 0, 0, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 242, 255, 0.3);
+      position: relative;
       overflow: hidden;
-      z-index: 1;
+    }
+
+    .main-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        var(--primary-cyan), 
+        var(--neon-purple),
+        var(--primary-red),
+        var(--neon-green),
+        var(--primary-cyan));
+      z-index: -1;
+      border-radius: 22px;
+      opacity: 0.4;
+      animation: borderGlow 4s linear infinite;
+      background-size: 400% 400%;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { 
+        background-position: 0% 50%;
+        opacity: 0.3;
+      }
+      50% { 
+        background-position: 100% 50%;
+        opacity: 0.6;
+      }
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .logo-icon {
+      font-size: 60px;
+      color: transparent;
+      background: linear-gradient(45deg, var(--primary-red), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      animation: pulse 2s infinite, rotate 10s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+      }
+      50% { 
+        transform: scale(1.08) rotate(180deg);
+        filter: brightness(1.3);
+      }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .title {
+      color: var(--primary-cyan);
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 5px;
+      text-shadow: 
+        0 0 10px rgba(0, 242, 255, 0.8),
+        0 0 20px rgba(0, 242, 255, 0.6),
+        0 0 30px rgba(0, 242, 255, 0.4);
+      letter-spacing: 1.5px;
+      animation: flicker 3s infinite alternate, float 6s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .subtitle {
+      color: #ffffff;
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+
+    .credits {
+      color: var(--neon-blue);
+      font-size: 14px;
+      margin-bottom: 30px;
+      text-align: center;
+      font-style: italic;
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    }
+
+    .instructions {
+      background: rgba(0, 20, 40, 0.5);
+      border-left: 4px solid var(--primary-cyan);
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .instructions::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 242, 255, 0.1), 
+        transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .instructions h4 {
+      color: var(--primary-cyan);
+      margin-bottom: 12px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instructions p {
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      padding-left: 5px;
+      position: relative;
+    }
+
+    .instructions p::before {
+      content: '▶';
+      color: var(--neon-green);
+      position: absolute;
+      left: -15px;
+      font-size: 12px;
+    }
+
+    /* Enhanced Input Group */
+    .input-group {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .input-label {
+      display: block;
+      color: var(--primary-cyan);
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+    }
+
+    .input-wrapper {
+      display: flex;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 
+        0 0 20px rgba(0, 242, 255, 0.4),
+        inset 0 0 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95), 
+        rgba(230, 255, 255, 0.98));
+      transition: all 0.3s;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--neon-purple);
+      box-shadow: 
+        0 0 30px rgba(176, 38, 255, 0.6),
+        0 0 60px rgba(0, 242, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .number-input {
+      flex: 1;
+      padding: 18px 20px;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: #000;
+      outline: none;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .number-input::placeholder {
+      color: #666;
+      font-weight: normal;
+    }
+
+    /* SUBMIT BUTTON - ENHANCED */
+    .submit-btn {
+      background: linear-gradient(135deg, 
+        #ff0000, 
+        #ff3366, 
+        #ff0000);
+      background-size: 200% 200%;
+      color: white;
+      border: none;
+      padding: 0 30px;
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      min-width: 140px;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+      transition: 0.5s;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      background-position: right center;
+      transform: translateY(-3px);
+      box-shadow: 
+        0 0 30px rgba(255, 0, 0, 0.7),
+        0 0 60px rgba(255, 0, 0, 0.4),
+        0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(1px);
+      box-shadow: 
+        0 0 20px rgba(255, 0, 0, 0.5),
+        0 0 40px rgba(255, 0, 0, 0.3);
+    }
+
+    .submit-btn i {
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+
+    .submit-btn:hover i {
+      transform: translateX(5px) rotate(45deg);
+    }
+
+    /* Action Buttons Enhanced */
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .action-btn {
+      padding: 18px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .action-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg, 
+        var(--primary-cyan), 
+        var(--neon-purple),
+        var(--primary-red));
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .action-btn:hover::after {
+      opacity: 1;
+      animation: borderGlow 3s linear infinite;
+    }
+
+    .channel-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E, #075E54);
+      color: white;
+      box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .owner-btn {
+      background: linear-gradient(135deg, var(--primary-cyan), #0099cc, #006699);
+      color: white;
+      box-shadow: 0 5px 20px rgba(0, 242, 255, 0.3);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 25px currentColor;
+    }
+
+    .action-btn:active {
+      transform: translateY(-2px);
+    }
+
+    .action-btn i {
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+
+    .action-btn:hover i {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .status-message {
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 25px;
+      display: none;
+      background: rgba(0, 40, 80, 0.6);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 242, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-display {
+      background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.8), 
+        rgba(20, 0, 40, 0.9));
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 25px;
+      display: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .code-display::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        var(--primary-cyan), 
+        var(--neon-purple),
+        var(--primary-red));
+      z-index: -1;
+      border-radius: 17px;
+      opacity: 0.5;
+      animation: borderGlow 3s linear infinite;
+    }
+
+    .code-display:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 0 40px rgba(0, 242, 255, 0.5),
+        0 0 80px rgba(176, 38, 255, 0.3);
+    }
+
+    .code-label {
+      color: var(--neon-green);
+      font-weight: 800;
+      margin-bottom: 15px;
+      display: block;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .code-value {
+      color: white;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      font-family: 'Courier New', monospace;
+      text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(0, 242, 255, 0.6);
+      background: linear-gradient(45deg, #fff, var(--primary-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .sound-control {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary-cyan), var(--neon-blue));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 
+        0 0 25px rgba(0, 242, 255, 0.8),
+        0 0 50px rgba(0, 191, 255, 0.5);
+      transition: all 0.3s;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .sound-control:hover {
+      transform: scale(1.15) rotate(90deg);
+      box-shadow: 
+        0 0 35px rgba(0, 242, 255, 1),
+        0 0 70px rgba(0, 191, 255, 0.7);
+    }
+
+    .sound-control i {
+      color: white;
+      font-size: 24px;
+    }
+
+    .cyber-line {
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--primary-cyan), 
+        var(--neon-purple),
+        var(--primary-red),
+        var(--primary-cyan),
+        transparent);
+      margin: 30px 0;
+      width: 100%;
+      position: relative;
+    }
+
+    .cyber-line::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .neon-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
+      z-index: 3;
     }
 
     .dot {
       position: absolute;
       width: 4px;
       height: 4px;
-      background: #00ffff;
+      background: var(--primary-cyan);
       border-radius: 50%;
-      animation: rise 5s linear infinite;
-      opacity: 0.6;
+      box-shadow: 
+        0 0 10px var(--primary-cyan),
+        0 0 20px var(--primary-cyan);
+      animation: float 20s linear infinite;
     }
 
-    @keyframes rise {
+    @keyframes float {
       0% {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 0.2;
+        transform: translateY(100vh) translateX(0) scale(0.5);
+        opacity: 0;
       }
-      100% {
-        transform: translateY(-10vh) scale(1);
+      10% {
         opacity: 1;
       }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(calc(100vw * var(--random-x))) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 
+          0 0 5px var(--primary-cyan),
+          0 0 10px var(--primary-cyan),
+          0 0 20px var(--primary-cyan),
+          0 0 40px var(--primary-cyan);
+      }
+      20%, 24%, 55% {
+        text-shadow: none;
+        opacity: 0.7;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .main-card {
+        padding: 20px;
+      }
+      
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      .title {
+        font-size: 26px;
+      }
+      
+      .submit-btn {
+        min-width: 120px;
+        padding: 0 20px;
+        font-size: 16px;
+      }
+      
+      .code-value {
+        font-size: 24px;
+        letter-spacing: 3px;
+      }
+    }
+
+    /* Loading animation for submit */
+    @keyframes loading {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading {
+      position: relative;
+      color: transparent !important;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: loading 1s linear infinite;
     }
   </style>
 </head>
@@ -176,115 +703,390 @@
     Your browser does not support HTML5 video.
   </video>
   
-  <!-- Neon dot overlay -->
-  <div class="neon-overlay" id="dots"></div>
-
-  <!-- Sound control button -->
-  <div class="sound-btn" id="soundBtn">
+  <!-- Overlay -->
+  <div class="overlay"></div>
+  
+  <!-- Neon dots -->
+  <div class="neon-dots" id="dotsContainer"></div>
+  
+  <!-- Sound control -->
+  <div class="sound-control" id="soundControl">
     <i class="fas fa-volume-mute" id="soundIcon"></i>
   </div>
-
+  
+  <!-- Main Container -->
   <div class="container">
-    <div class="box" id="box">
-      <div id="text">
-        <i class="fa fa-user" style="color: #ff0000 ;"></i>
-        <h3>🎭𝕃𝕒𝕜𝕚 𝕄𝔻🎭 </h3>
-        <h6> CREACT BY CYBER DINU </h6>
-        <h6>🎫️️ Enter your number with country code <br> 2️⃣ WhatsApp Number දාන්න<br>
-Country code එක්ක number එක දාන්න<br>
-උදා: 947XXXXXXXX<br><br>
-
-3️⃣ Pair Code එක ලැබෙයි<br>
-Terminal එකේ digits තියෙන pairing code එකක් පෙන්වයි<br><br>
-
-4️⃣ Phone එකෙන් Pair කරන්න<br>
-WhatsApp → Settings → Linked Devices → Link a device<br>
-👉 Pair with code / Link with phone number<br>
-👉 Terminal එකේ code එක දාන්න<br><br>
-
-5️⃣ Connect වුනාම<br>
-Bot එක WhatsApp එකට connect වෙනවා<br>
-Session file එක auto save වෙනවා<br><br>
-
-6️⃣ ඊලගට<br>
-Bot එක restart කරද්දි auto connect වෙනවා<br>
-.menu, .alive වගේ commands වැඩ කරනවා</h6>
-
-        <div class="input-container">
-          <input placeholder="9476xxxxxxx" type="number" id="number">
-          <button id="submit">Submit</button>
+    <div class="main-card">
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="fas fa-robot"></i>
         </div>
-
-        <a id="waiting-message" class="centered-text" style="display: none;">Please wait a while...</a>
-        <main id="pair"></main>
+        <h1 class="title">𝕃𝕒𝕜𝕚 𝕄𝔻</h1>
+        <p class="subtitle">𝕃𝕒𝕜𝕚 𝕄𝔻 WhatsApp Bot</p>
+        <p class="credits">CREATED BY lakshan</p>
+      </div>
+      
+      <div class="cyber-line"></div>
+      
+      <!-- Instructions -->
+      <div class="instructions">
+        <h4><i class="fas fa-code"></i> Setup Instructions</h4>
+        <p>1️⃣ Enter your WhatsApp number with country code</p>
+        <p>2️⃣ Click submit to get pairing code</p>
+        <p>3️⃣ Open WhatsApp → Settings → Linked Devices</p>
+        <p>4️⃣ Click "Link a device" and enter the code</p>
+        <p>5️⃣ Bot will connect automatically</p>
+        <p>6️⃣ Use .menu or .alive to test</p>
+      </div>
+      
+      <!-- Input Section -->
+      <div class="input-group">
+        <label class="input-label">
+          <i class="fas fa-mobile-alt"></i> WhatsApp Number
+        </label>
+        <div class="input-wrapper">
+          <input type="number" class="number-input" id="numberInput" placeholder="9476xxxxxxx" minlength="9">
+          <button class="submit-btn" id="submitBtn">
+            <i class="fas fa-rocket"></i> SUBMIT
+          </button>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="https://whatsapp.com/channel/0029VbC8OWEBadmatxpZel15" target="_blank" class="action-btn channel-btn">
+          <i class="fab fa-whatsapp"></i> CHANNEL
+        </a>
+        <a href="https://wa.me/94789227570" target="_blank" class="action-btn owner-btn">
+          <i class="fas fa-user-shield"></i> OWNER
+        </a>
+      </div>
+      
+      <!-- Status Message -->
+      <div class="status-message" id="statusMessage">
+        <i class="fas fa-spinner fa-spin"></i> Processing your request...
+      </div>
+      
+      <!-- Code Display -->
+      <div class="code-display" id="codeDisplay" onclick="copyCode()">
+        <span class="code-label">Pairing Code</span>
+        <div class="code-value" id="codeValue">XXXXXX</div>
+        <small style="color: #aaa; margin-top: 10px; display: block;">
+          <i class="fas fa-copy"></i> Click to copy code
+        </small>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
   <script>
-    let a = document.getElementById("pair");
-    let b = document.getElementById("submit");
-    let c = document.getElementById("number");
-    const video = document.getElementById("bgVideo");
-    const soundBtn = document.getElementById("soundBtn");
-    const soundIcon = document.getElementById("soundIcon");
+    // DOM Elements
+    const numberInput = document.getElementById('numberInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusMessage = document.getElementById('statusMessage');
+    const codeDisplay = document.getElementById('codeDisplay');
+    const codeValue = document.getElementById('codeValue');
+    const bgVideo = document.getElementById('bgVideo');
+    const soundControl = document.getElementById('soundControl');
+    const soundIcon = document.getElementById('soundIcon');
+    const dotsContainer = document.getElementById('dotsContainer');
 
-    // Sound control functionality
-    soundBtn.addEventListener("click", () => {
-      if (video.muted) {
-        video.muted = false;
-        soundIcon.classList.remove("fa-volume-mute");
-        soundIcon.classList.add("fa-volume-up");
+    // Initialize neon dots with enhanced effects
+    function initNeonDots() {
+      for (let i = 0; i < 150; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.setProperty('--random-x', Math.random());
+        dot.style.animationDelay = `${Math.random() * 20}s`;
+        dot.style.animationDuration = `${15 + Math.random() * 25}s`;
+        
+        // Random color variation
+        const colors = ['#00f2ff', '#b026ff', '#ff0000', '#00ff88'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.background = color;
+        dot.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+        
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Sound control with enhanced effect
+    soundControl.addEventListener('click', () => {
+      if (bgVideo.muted) {
+        bgVideo.muted = false;
+        soundIcon.classList.remove('fa-volume-mute');
+        soundIcon.classList.add('fa-volume-up');
+        soundControl.style.boxShadow = 
+          '0 0 30px rgba(0, 242, 255, 1), 0 0 60px rgba(0, 191, 255, 0.7)';
+        
+        // Add click effect
+        soundControl.style.transform = 'scale(1.3)';
+        setTimeout(() => {
+          soundControl.style.transform = 'scale(1)';
+        }, 300);
       } else {
-        video.muted = true;
-        soundIcon.classList.remove("fa-volume-up");
-        soundIcon.classList.add("fa-volume-mute");
+        bgVideo.muted = true;
+        soundIcon.classList.remove('fa-volume-up');
+        soundIcon.classList.add('fa-volume-mute');
+        soundControl.style.boxShadow = 
+          '0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(0, 191, 255, 0.5)';
       }
     });
 
-    async function Copy() {
-      let text = document.getElementById("copy").innerText;
-      let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
-      obj.innerText = "COPIED";
-      obj.style = "color:blue;font-weight:bold";
-      obj.size = "5";
+    // Enhanced copy code function
+    async function copyCode() {
+      const code = codeValue.innerText;
+      if (code === 'XXXXXX' || code === 'COPIED!') return;
+      
+      try {
+        await navigator.clipboard.writeText(code);
+        
+        // Enhanced visual feedback
+        const originalText = codeValue.innerText;
+        const originalBg = codeDisplay.style.background;
+        
+        codeValue.innerText = 'COPIED!';
+        codeValue.style.background = 'linear-gradient(45deg, #00ff88, #00cc66)';
+        codeValue.style.webkitBackgroundClip = 'text';
+        codeDisplay.style.boxShadow = 
+          '0 0 50px rgba(0, 255, 136, 0.7), 0 0 100px rgba(0, 255, 136, 0.4)';
+        
+        // Add confetti effect
+        createConfetti();
+        
+        setTimeout(() => {
+          codeValue.innerText = originalText;
+          codeValue.style.background = 'linear-gradient(45deg, #fff, var(--primary-cyan))';
+          codeDisplay.style.boxShadow = '';
+        }, 2000);
+        
+      } catch (err) {
+        showError('Failed to copy. Please copy manually: ' + code);
+      }
+    }
+
+    // Confetti effect for copy success
+    function createConfetti() {
+      const confettiCount = 30;
+      const container = document.querySelector('.container');
+      
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '8px';
+        confetti.style.height = '8px';
+        confetti.style.background = ['#00f2ff', '#b026ff', '#ff0000', '#00ff88'][Math.floor(Math.random() * 4)];
+        confetti.style.borderRadius = '50%';
+        confetti.style.left = `${50 + Math.random() * 40}%`;
+        confetti.style.top = '50%';
+        confetti.style.zIndex = '1000';
+        confetti.style.opacity = '1';
+        container.appendChild(confetti);
+        
+        // Animate
+        const animation = confetti.animate([
+          { 
+            transform: 'translateY(0) rotate(0deg)', 
+            opacity: 1 
+          },
+          { 
+            transform: `translateY(-${100 + Math.random() * 100}px) 
+                       translateX(${(Math.random() - 0.5) * 200}px) 
+                       rotate(${360 * Math.random()}deg)`, 
+            opacity: 0 
+          }
+        ], {
+          duration: 1000 + Math.random() * 1000,
+          easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+        });
+        
+        animation.onfinish = () => confetti.remove();
+      }
+    }
+
+    // Enhanced submit handler with animations
+    submitBtn.addEventListener('click', async () => {
+      const number = numberInput.value.trim();
+      
+      // Validation
+      if (!number) {
+        showError('Please enter your WhatsApp number');
+        shakeElement(numberInput);
+        return;
+      }
+      
+      if (number.replace(/[^0-9]/g, "").length < 9) {
+        showError('Invalid number. Please include country code');
+        shakeElement(numberInput);
+        return;
+      }
+      
+      // Format number
+      const cleanNumber = number.replace(/[^0-9]/g, "");
+      numberInput.value = `+${cleanNumber}`;
+      numberInput.style.color = '#000';
+      
+      // Show loading with enhanced effects
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      statusMessage.style.display = 'block';
+      codeDisplay.style.display = 'none';
+      
+      // Add loading effect to input wrapper
+      document.querySelector('.input-wrapper').style.boxShadow = 
+        '0 0 30px rgba(0, 242, 255, 0.6), 0 0 60px rgba(0, 191, 255, 0.4)';
+      
+      try {
+        // Simulate API call with enhanced delay for effect
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const demoCode = Math.floor(100000 + Math.random() * 900000);
+        
+        // Display code with animation
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        statusMessage.style.display = 'none';
+        codeValue.innerText = demoCode;
+        
+        // Animate code display appearance
+        codeDisplay.style.display = 'block';
+        codeDisplay.style.opacity = '0';
+        codeDisplay.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          codeDisplay.style.transition = 'all 0.5s ease-out';
+          codeDisplay.style.opacity = '1';
+          codeDisplay.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // Reset input wrapper
+        document.querySelector('.input-wrapper').style.boxShadow = '';
+        
+        // Success effect on submit button
+        submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
+        setTimeout(() => {
+          submitBtn.style.background = '';
+        }, 1000);
+        
+      } catch (error) {
+        showError('Service unavailable. Please try again later.');
+        console.error(error);
+        
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        document.querySelector('.input-wrapper').style.boxShadow = '';
+      }
+    });
+
+    // Shake animation for invalid input
+    function shakeElement(element) {
+      element.style.animation = 'none';
       setTimeout(() => {
-        obj.innerText = text;
-        obj.style = "color:white;font-weight-bold";
-        obj.size = "5";
+        element.style.animation = 'shake 0.5s';
+      }, 10);
+      
+      // Define shake animation
+      if (!document.querySelector('#shake-animation')) {
+        const style = document.createElement('style');
+        style.id = 'shake-animation';
+        style.textContent = `
+          @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      setTimeout(() => {
+        element.style.animation = '';
       }, 500);
     }
 
-    b.addEventListener("click", async (e) => {
-      e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<a style="color:white;font-weight:bold">Enter your WhatsApp number with Country Code</a><br><br>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<a style="color:red;font-weight:bold">Invalid Number</a><br><br>';
+    // Enhanced error display
+    function showError(message) {
+      statusMessage.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i> ${message}
+      `;
+      statusMessage.style.display = 'block';
+      statusMessage.style.background = 'linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(139, 0, 0, 0.4))';
+      statusMessage.style.color = '#ff6666';
+      statusMessage.style.borderColor = '#ff0000';
+      
+      // Add error animation
+      statusMessage.style.animation = 'pulse 0.5s';
+      
+      setTimeout(() => {
+        statusMessage.style.display = 'none';
+        statusMessage.style.background = '';
+        statusMessage.style.color = '';
+        statusMessage.style.borderColor = '';
+        statusMessage.style.animation = '';
+        statusMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing your request...';
+      }, 3000);
+    }
+
+    // Enhanced input validation
+    numberInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/[^0-9]/g, "");
+      if (value.length > 15) {
+        value = value.substring(0, 15);
+      }
+      e.target.value = value;
+      
+      // Add typing effect
+      if (value.length > 0) {
+        numberInput.style.background = 'linear-gradient(90deg, #e6ffff, #ffffff)';
       } else {
-        const number = c.value.replace(/[^0-9]/g, "");
-        c.type = "text";
-        c.value = "+" + number;
-        c.style = "color:black;font-size:20px";
-        a.innerHTML = '<a style="color:white;font-weight:bold">Please Wait...</a><br><br>';
-        let { data } = await axios(`/code?number=${number}`);
-        let code = data.code || "Service Unavailable";
-        a.innerHTML = `<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:white;">${code}</span></font><br><br><br>`;
+        numberInput.style.background = '';
       }
     });
 
-    // Dot animation
-    const bg = document.getElementById("dots");
-    for (let i = 0; i < 80; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dot.style.left = Math.random() * 100 + "vw";
-      dot.style.animationDuration = 3 + Math.random() * 5 + "s";
-      dot.style.animationDelay = Math.random() * 5 + "s";
-      bg.appendChild(dot);
-    }
+    // Enter key support with enhanced feedback
+    numberInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        // Add press effect
+        submitBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          submitBtn.style.transform = '';
+          submitBtn.click();
+        }, 150);
+      }
+    });
+
+    // Hover effects for all buttons
+    document.querySelectorAll('button, .action-btn').forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-3px)';
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      initNeonDots();
+      
+      // Add interactive effects to elements
+      document.querySelectorAll('.logo-icon, .title').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          el.style.filter = 'brightness(1.5)';
+        });
+        
+        el.addEventListener('mouseleave', () => {
+          el.style.filter = '';
+        });
+      });
+      
+      // Auto-focus input
+      setTimeout(() => {
+        numberInput.focus();
+      }, 500);
+    });
   </script>
 </body>
 </html>
